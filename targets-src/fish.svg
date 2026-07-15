@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+    <rect width="800" height="1000" fill="white"/>
+    <rect x="18" y="18" width="764" height="964" rx="26" fill="none" stroke="#2b2b52" stroke-width="10"/>
+    <rect x="38" y="38" width="724" height="924" rx="18" fill="none" stroke="#2b2b52" stroke-width="3" stroke-dasharray="22 14"/>
+    <circle cx="755" cy="500" r="6" fill="#2b2b52"/><circle cx="745" cy="610" r="9" fill="#2b2b52"/><circle cx="714" cy="714" r="12" fill="#2b2b52"/><circle cx="666" cy="805" r="6" fill="#2b2b52"/><circle cx="602" cy="879" r="9" fill="#2b2b52"/><circle cx="526" cy="930" r="12" fill="#2b2b52"/><circle cx="443" cy="957" r="6" fill="#2b2b52"/><circle cx="357" cy="957" r="9" fill="#2b2b52"/><circle cx="274" cy="930" r="12" fill="#2b2b52"/><circle cx="198" cy="879" r="6" fill="#2b2b52"/><circle cx="134" cy="805" r="9" fill="#2b2b52"/><circle cx="86" cy="714" r="12" fill="#2b2b52"/><circle cx="55" cy="610" r="6" fill="#2b2b52"/><circle cx="45" cy="500" r="9" fill="#2b2b52"/><circle cx="55" cy="390" r="12" fill="#2b2b52"/><circle cx="86" cy="286" r="6" fill="#2b2b52"/><circle cx="134" cy="195" r="9" fill="#2b2b52"/><circle cx="198" cy="121" r="12" fill="#2b2b52"/><circle cx="274" cy="70" r="6" fill="#2b2b52"/><circle cx="357" cy="43" r="9" fill="#2b2b52"/><circle cx="443" cy="43" r="12" fill="#2b2b52"/><circle cx="526" cy="70" r="6" fill="#2b2b52"/><circle cx="602" cy="121" r="9" fill="#2b2b52"/><circle cx="666" cy="195" r="12" fill="#2b2b52"/><circle cx="714" cy="286" r="6" fill="#2b2b52"/><circle cx="745" cy="390" r="9" fill="#2b2b52"/>
+    <text x="400" y="95" text-anchor="middle" font-family="Arial Black, Arial" font-size="44" font-weight="900" fill="#2b2b52">🐠 BUBBLES THE FISH</text>
+    <text x="400" y="132" text-anchor="middle" font-family="Arial" font-size="22" fill="#2b2b52">LunaColor AR &#8226; color me, then scan me!</text>
+    <svg x="60" y="150" width="680" height="680" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#2b2b52" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" fill="white">
+        <path data-region="tail" d="M282 200 L365 133 L349 200 L365 267 Z"/>
+        <path data-region="finTop" d="M162 142 Q205 62 252 148 Z"/>
+        <ellipse data-region="body" cx="182" cy="205" rx="115" ry="75"/>
+        <path data-region="finSide" d="M148 213 Q190 193 216 228 Q180 262 148 213 Z"/>
+      </g>
+      <circle cx="112" cy="182" r="12" fill="#2b2b52"/>
+      <path d="M82 226 Q94 238 110 232" fill="none" stroke="#2b2b52" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="320" cy="85" r="12" fill="none" stroke="#2b2b52" stroke-width="4"/>
+      <circle cx="345" cy="55" r="8" fill="none" stroke="#2b2b52" stroke-width="4"/>
+      <circle cx="60" cy="330" r="10" fill="none" stroke="#2b2b52" stroke-width="4"/>
+    </svg>
+    <text x="400" y="905" text-anchor="middle" font-family="Arial" font-size="21" font-weight="bold" fill="#2b2b52">1. Color me!  2. Open the LunaColor scanner!  3. Point the camera at me!</text>
+    <text x="400" y="945" text-anchor="middle" font-family="Arial" font-size="18" fill="#2b2b52">lunacolor-ar &#8226; page: fish</text>
+    
+  </svg>
