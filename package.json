@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --port 5173 --strictPort",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "VITE_BASE=/lunacolor-ar/ vite build && touch dist/.nojekyll && cd dist && git init -q -b gh-pages && git add -A && git commit -q -m deploy && git push -f https://github.com/planurstay1-lang/lunacolor-ar.git gh-pages && cd .. && rm -rf dist/.git"
   },
   "dependencies": {
     "@8thwall/engine-binary": "^1.0.0",
