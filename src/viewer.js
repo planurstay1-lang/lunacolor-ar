@@ -27,10 +27,15 @@ export async function openViewer(topic, colors) {
   const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.01, 40);
   camera.position.set(0, 0.5, 2.4);
 
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x8899ff, 1.4));
-  const sun = new THREE.DirectionalLight(0xffffff, 1.6);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x8899ff, 1.1));
+  const sun = new THREE.DirectionalLight(0xffffff, 1.3);
   sun.position.set(2, 4, 3);
   scene.add(sun);
+  try {
+    const { RoomEnvironment } = await import('three/addons/environments/RoomEnvironment.js');
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  } catch (e) { console.warn('env lighting unavailable', e); }
 
   const model = await getModel(topic.id, topic.model, colors);
   scene.add(model);

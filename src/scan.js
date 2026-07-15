@@ -120,6 +120,10 @@ function scenePipelineModule() {
   let tableMode = null; // true = page flat on a table, false = upright (screen/wall)
   const _normal = new THREE.Vector3();
   const _quat = new THREE.Quaternion();
+  // Damped world anchor: while the page is visible we ease toward its pose
+  // (no jitter); when it leaves the frame the creature STAYS PUT in the room,
+  // held by SLAM — walk around it, it doesn't move.
+  const desired = { pos: new THREE.Vector3(), quat: new THREE.Quaternion(), scale: 1, has: false };
 
   // build (or reuse) everything for the page the camera just recognized
   const perTopic = {};
@@ -191,9 +195,16 @@ function scenePipelineModule() {
     }
     // remember textured flag per page
     if (perTopic[detail.name]) perTopic[detail.name].textured = state.textured;
-    anchor.position.copy(detail.position);
-    anchor.quaternion.copy(detail.rotation);
-    baseScale = detail.scale * 0.8;
+    desired.pos.copy(detail.position);
+    desired.quat.copy(detail.rotation);
+    desired.scale = detail.scale * 0.9;
+    if (!desired.has) {
+      // first sighting: snap straight to the page, then ease from here on
+      anchor.position.copy(desired.pos);
+      anchor.quaternion.copy(desired.quat);
+      baseScale = desired.scale;
+      desired.has = true;
+    }
     // which way is the page facing? (page normal vs world up)
     _normal.set(0, 0, 1).applyQuaternion(_quat.copy(detail.rotation));
     tableMode = Math.abs(_normal.y) > 0.55;
@@ -213,12 +224,19 @@ function scenePipelineModule() {
 
   return {
     name: 'lunacolor-scene',
-    onStart: () => {
-      const { scene, camera } = window.XR8.Threejs.xrScene();
-      scene.add(new THREE.HemisphereLight(0xffffff, 0x8899ff, 1.4));
-      const sun = new THREE.DirectionalLight(0xffffff, 1.5);
+    onStart: async () => {
+      const { scene, camera, renderer } = window.XR8.Threejs.xrScene();
+      scene.add(new THREE.HemisphereLight(0xffffff, 0x8899ff, 1.1));
+      const sun = new THREE.DirectionalLight(0xffffff, 1.2);
       sun.position.set(2, 5, 3);
       scene.add(sun);
+      // image-based lighting: glossy toy materials reflect a soft room, which
+      // reads as "physical object" instead of flat computer graphics
+      try {
+        const { RoomEnvironment } = await import('three/addons/environments/RoomEnvironment.js');
+        const pmrem = new THREE.PMREMGenerator(renderer);
+        scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+      } catch (e) { console.warn('env lighting unavailable', e); }
 
       anchor = new THREE.Group();
       stand = new THREE.Group();
@@ -253,6 +271,13 @@ function scenePipelineModule() {
         state.elapsed += dt;
         state.model?.userData.animate?.(state.elapsed, dt);
         if (anchor && foundAt >= 0) {
+          // damped follow while the page is in view; frozen in the room after
+          if (desired.has && state.elapsed - state.lastSeen < 0.6) {
+            const k = 1 - Math.pow(0.001, dt); // framerate-independent easing
+            anchor.position.lerp(desired.pos, k);
+            anchor.quaternion.slerp(desired.quat, k);
+            baseScale += (desired.scale - baseScale) * k;
+          }
           const p = Math.min((state.elapsed - foundAt) / 0.7, 1);
           const pop = p >= 1 ? 1 : 0.1 + 1.15 * Math.sin(p * Math.PI * 0.62) * p;
           anchor.scale.setScalar(baseScale * Math.max(pop, 0.05));
@@ -286,7 +311,13 @@ async function start() {
   const XR8 = window.XR8;
   try {
     await loadAllTargets();
-    XR8.XrController.configure({ imageTargetData: Object.values(targets) });
+    XR8.XrController.configure({
+      // SLAM world tracking is the difference between "sticker on the camera
+      // feed" and a creature that lives in the room: the phone builds a map,
+      // so the model stays planted while you walk around it.
+      disableWorldTracking: false,
+      imageTargetData: Object.values(targets)
+    });
   } catch (e) {
     fail('No scannable pages yet 😿',
       'The image-target data is missing. Generate it with ' +
