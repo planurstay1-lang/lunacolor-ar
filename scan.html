@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>LunaColor AR — Scan your page!</title>
+  <style>
+    html, body { margin: 0; width: 100vw; height: 100vh; height: 100dvh;
+      overflow: hidden; background: #171233;
+      font-family: "Comic Sans MS", "Chalkboard SE", "Segoe UI", sans-serif; color: #fff; }
+    #camerafeed { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh;
+      display: block; }
+    .banner {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 5; text-align: center;
+      padding: 14px; background: linear-gradient(180deg, #171233ee, transparent);
+      font-weight: 700; pointer-events: none;
+    }
+    #status-card {
+      position: absolute; inset: 0; z-index: 10; display: grid; place-items: center;
+      background: radial-gradient(circle at 50% 30%, #3d2d73, #171233 75%);
+      text-align: center; padding: 24px;
+    }
+    #status-card .inner { max-width: 380px; }
+    #status-card .big { font-size: 3rem; }
+    #status-card a { color: #ffd93d; }
+    .hidden { display: none !important; }
+    #btn-capture {
+      position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
+      z-index: 6; font: inherit; font-weight: 800; font-size: 1.05rem;
+      padding: 15px 28px; border-radius: 999px; border: 3px solid #2b2b52;
+      background: #ffd93d; color: #2b2b52; box-shadow: 0 5px 0 #2b2b52;
+      cursor: pointer;
+    }
+    #btn-capture:active { transform: translateX(-50%) translateY(5px); box-shadow: 0 0 0 #2b2b52; }
+    #btn-start {
+      margin-top: 18px; font: inherit; font-weight: 800; font-size: 1.15rem;
+      padding: 16px 30px; border-radius: 999px; border: 3px solid #ffd93d;
+      background: #ffd93d; color: #2b2b52; cursor: pointer;
+    }
+    #ar-tools {
+      position: absolute; right: 16px; bottom: 96px; z-index: 6;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    #ar-tools .vtool {
+      width: 56px; height: 56px; border-radius: 50%; border: 3px solid #2b2b52;
+      background: #fff; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 0 #2b2b52;
+      display: grid; place-items: center; padding: 0;
+    }
+    #ar-tools .vtool:active { transform: translateY(4px); box-shadow: 0 0 0 #2b2b52; }
+  </style>
+  <!-- 8th Wall distributed engine binary (self-hosted, free & open) -->
+  <script src="./external/xr/xr.js" async crossorigin="anonymous" data-preload-chunks="slam"></script>
+  <script type="module" crossorigin src="/lunacolor-ar/assets/scan-__R1dM9b.js"></script>
+  <link rel="modulepreload" crossorigin href="/lunacolor-ar/assets/photo-B81VYw6b.js">
+</head>
+<body>
+  <canvas id="camerafeed"></canvas>
+  <div class="banner" id="banner">📄 Point your camera at your coloring page!</div>
+  <button id="btn-capture" class="hidden">🎨 Live coloring: ON</button>
+  <div id="ar-tools" class="hidden">
+    <button class="vtool" data-act="zoomin" title="Zoom in">➕</button>
+    <button class="vtool" data-act="zoomout" title="Zoom out">➖</button>
+    <button class="vtool" data-act="voice" title="Luna's voice">🔊</button>
+    <button class="vtool" data-act="photo" title="Take a photo">📸</button>
+  </div>
+  <div id="status-card">
+    <div class="inner">
+      <div class="big">🌙</div>
+      <h2 id="status-title">Waking up the magic…</h2>
+      <p id="status-text">Getting the camera ready. Say yes when it asks to use the camera!</p>
+      <button id="btn-start" class="hidden">✨ Tap to start the magic!</button>
+    </div>
+  </div>
+</body>
+</html>
